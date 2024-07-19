@@ -6,10 +6,10 @@ const rl = readline.createInterface({
   output: process.stdout,
 });
 
-async function setCommitMessage() {
+async function setCommitMessageAndRunGitCommands() {
 
   rl.question(`Write commit message: `, inputValue => {
-    let commitMessage = inputValue;
+    const commitMessage = inputValue;
     runGitCommands(commitMessage);
 
     rl.close();
@@ -19,7 +19,6 @@ async function setCommitMessage() {
 async function executeCommand(command) {
 
   try {
-
     exec(command, (error, consoleResponse, consoleError) => {
       if (error) return console.log(`Error: ${error.message}`);
       if (consoleError) return console.log(`Console Error: ${consoleError}`);
@@ -31,8 +30,6 @@ async function executeCommand(command) {
     console.log(`Failed to execute ${command}. Error: ${error}`);
   };
 };
-
-
 
 async function runGitCommands(commitMessage) {
 
@@ -53,4 +50,4 @@ async function runGitCommands(commitMessage) {
   };
 };
 
-setCommitMessage();
+setCommitMessageAndRunGitCommands();
