@@ -1,4 +1,5 @@
 const { exec } = require('child_process');
+const readline = require('node:readline');
 
 async function executeCommand(command) {
 
@@ -15,12 +16,26 @@ async function executeCommand(command) {
   };
 };
 
+function setCommitMessage() {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+  });
+
+  rl.question(`Write commit message`, message => {
+    rl.close();
+    return message;
+  });
+
+  return 
+};
+
 async function runGitCommands() {
 
   try {
     await executeCommand('git add .');
 
-    const commitMessage = 'change of code and gti push script';
+    const commitMessage = setCommitMessage();
     await executeCommand(`git commit -m "${commitMessage}"`);
 
     await executeCommand('git push origin main');
