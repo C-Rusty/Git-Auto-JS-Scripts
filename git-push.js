@@ -23,7 +23,8 @@ function setCommitMessage() {
   });
 
   rl.question(`Write commit message`, message => {
-    return message && rl.close();
+    commitMessage = message;
+    rl.close();
   });
 };
 
@@ -32,7 +33,6 @@ async function runGitCommands() {
   try {
     await executeCommand('git add .');
 
-    const commitMessage = setCommitMessage();
     await executeCommand(`git commit -m "${commitMessage}"`);
 
     await executeCommand('git push origin main');
@@ -41,5 +41,7 @@ async function runGitCommands() {
     console.error(error);
   };
 };
+
+let commitMessage = undefined;
 
 runGitCommands();
