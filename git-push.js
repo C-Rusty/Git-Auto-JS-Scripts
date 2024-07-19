@@ -16,7 +16,7 @@ async function executeCommand(command) {
   };
 };
 
-function setCommitMessage() {
+async function setCommitMessage() {
   const rl = readline.createInterface({
     input: process.stdin,
     output: process.stdout,
@@ -32,8 +32,8 @@ async function runGitCommands() {
 
   try {
     await executeCommand('git add .');
-    
-    setCommitMessage();
+
+    await setCommitMessage();
 
     await executeCommand(`git commit -m "${commitMessage}"`);
 
