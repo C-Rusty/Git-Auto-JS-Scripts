@@ -22,7 +22,7 @@ async function executeCommand(command) {
 
     exec(command, (error, consoleResponse, consoleError) => {
       if (error) return console.log(`Error: ${error.message}`);
-      if (stderr) return console.log(`Console Error: ${consoleError}`);
+      if (consoleError) return console.log(`Console Error: ${consoleError}`);
 
       console.log(`Console response: ${consoleResponse}`);
     });
