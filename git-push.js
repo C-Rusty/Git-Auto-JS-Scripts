@@ -32,6 +32,8 @@ async function runGitCommands() {
 
   try {
     await executeCommand('git add .');
+    
+    setCommitMessage();
 
     await executeCommand(`git commit -m "${commitMessage}"`);
 
