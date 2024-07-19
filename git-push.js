@@ -26,7 +26,7 @@ async function runGitCommands() {
     console.log('Changes committed.');
 
     console.log('Running: git push');
-    await executeCommand('git push');
+    await executeCommand('git push origin main');
     console.log('Changes pushed.');
   } catch (error) {
     console.error(error);
