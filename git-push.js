@@ -13,18 +13,6 @@ async function executeCommand(command) {
   } catch (error) {
     console.log(`Failed to execute ${command}. Error: ${error}`);
   };
-
-  // return new Promise((resolve, reject) => {
-  //   exec(command, (error, stdout, stderr) => {
-  //     if (error) {
-  //       reject(`Error: ${error.message}`);
-  //     }
-  //     if (stderr) {
-  //       reject(`Stderr: ${stderr}`);
-  //     }
-  //     resolve(stdout);
-  //   });
-  // });
 };
 
 async function runGitCommands() {
