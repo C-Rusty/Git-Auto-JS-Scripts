@@ -23,11 +23,8 @@ function setCommitMessage() {
   });
 
   rl.question(`Write commit message`, message => {
-    rl.close();
-    return message;
+    return message && rl.close();
   });
-
-  return 
 };
 
 async function runGitCommands() {
