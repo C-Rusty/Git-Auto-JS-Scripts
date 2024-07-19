@@ -1,14 +1,30 @@
 const { exec } = require('child_process');
 const readline = require('node:readline');
 
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout,
+});
+
+async function setCommitMessage() {
+
+  rl.question(`Write commit message: `, inputValue => {
+    let commitMessage = inputValue;
+    runGitCommands(commitMessage);
+
+    rl.close();
+  });
+};
+
 async function executeCommand(command) {
 
   try {
-    exec(command, (error, stdout, stderr) => {
-      if (error) return console.log(`Error: ${error.message}`);
-      if (stderr) return console.log(`Stderr: ${stderr}`);
 
-      console.log(`stdout: ${stdout}`);
+    exec(command, (error, consoleResponse, consoleError) => {
+      if (error) return console.log(`Error: ${error.message}`);
+      if (stderr) return console.log(`Console Error: ${consoleError}`);
+
+      console.log(`Console response: ${consoleResponse}`);
     });
 
   } catch (error) {
@@ -16,34 +32,25 @@ async function executeCommand(command) {
   };
 };
 
-async function setCommitMessage() {
-  const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-  });
 
-  rl.question(`Write commit message`, message => {
-    commitMessage = message;
-    rl.close();
-  });
-};
 
-async function runGitCommands() {
+async function runGitCommands(commitMessage) {
 
   try {
-    await executeCommand('git add .');
+    if (commitMessage) {
+      await executeCommand('git add .');
 
-    await setCommitMessage();
+      await executeCommand(`git commit -m "${commitMessage}"`);
 
-    await executeCommand(`git commit -m "${commitMessage}"`);
+      await executeCommand('git push origin main');
 
-    await executeCommand('git push origin main');
+    } else {
+      console.log('Commit message not provided. Exiting...');
+    };
 
   } catch (error) {
     console.error(error);
   };
 };
 
-let commitMessage = undefined;
-
-runGitCommands();
+setCommitMessage();
